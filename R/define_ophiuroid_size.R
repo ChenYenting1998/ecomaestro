@@ -42,11 +42,12 @@ define_ophiuroid_size <- function(data,
 
   if (protocol_ophiuroid == "all_arms") {
 
-  # summarize
+  # summation
+  oph_sum_group <- c(grouping_variables, "Taxon", "ind") %>% lapply(as.symbol)
   oph_sum <-
     oph_split %>%
     mutate(Type = NA, L = NA, W = NA) %>%
-    group_by({{grouping_variables}}, "Taxon","ind") %>%  # think about this part
+    group_by(.dots = oph_sum_group) %>%  # think about this part
     summarize(Size = sum(Size)) %>%
     ungroup()
 
@@ -64,21 +65,23 @@ define_ophiuroid_size <- function(data,
   } else if (protocol_ophiuroid == "longest_arm") {
 
     # identify the longest arm
+    oph_max_size_group <- c(grouping_variables, "Taxon", "Note", "ind")
     oph_max_size <-
       oph_split %>%
       mutate(Type = NA, L = NA, W = NA) %>% # removing redundant information
       filter(!ind %in% c("Arm", "Disc")) %>%
-      group_by({{grouping_variables}}, "Taxon", "Note", "ind") %>% # group
+      group_by(.dots = oph_max_size_group) %>% # group
       filter(Size == max(Size)) %>% # find largest sizes with respect to the arms and discs
       distinct() %>% # drop identical values
       mutate(Size = if_else(Note == "Arm", Size * 5, Size)) %>% # size of arm * 5
       ungroup()
 
+    oph_max_size_sum_group <- c(grouping_variables, "Taxon", "ind")
     oph_max_size_sum <-
       oph_max_size %>%
-      group_by({{grouping_variables}}, "Taxon", "ind") %>% # group
+      group_by(.dots = oph_max_size_sum_group) %>% # group
       summarise(Size = sum(Size)) %>%
-      mutate(Type = "Compound", Condition = "C")
+      mutate(Method = "Compound", Condition = "C")
 
     oph_max_size_sum$ind <- NULL
 
