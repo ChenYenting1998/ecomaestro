@@ -17,19 +17,19 @@
 #' data(iris)
 #' values <- iris[-5] # extract numerical values from `iris`
 #' normalized <- scale(values) # normalize the values
-#' pca_iris <- rda(normalized)  # returns a "rda" object
+#' pca_iris <- rda(normalized) # returns a "rda" object
 #' plot_PCA(pca_iris, sites_addins = iris[5], sites_label = "Species", sites_color = "Species")
 plot_PCA <- function(rda_object, scaling = 1,
                      sites_addins = NULL, species_addins = NULL,
                      sites_label, sites_color,
-                     species_color){
+                     species_color) {
 
   # scaling default = 1
 
   # 1. libraries --------------------------------------------------------------
-  #library(vegan)
-  #library(dplyr)
-  #library(tidyr)
+  # library(vegan)
+  # library(dplyr)
+  # library(tidyr)
 
   if (missing(rda_object) | !(class(rda_object)[class(rda_object) %in% "rda"] == "rda")) {
     message("input is not a rda_object from the package `vegan`")
@@ -56,9 +56,8 @@ plot_PCA <- function(rda_object, scaling = 1,
     data.frame() %>%
     mutate(variables = rownames(scores(rda_object, scaling = scaling)$species))
 
-  if(!is.null(species_addins)){
-
-    if (!is.data.frame(species_addins)){
+  if (!is.null(species_addins)) {
+    if (!is.data.frame(species_addins)) {
       message("sites_addins is not a data.frame")
       stop()
     } else {
@@ -73,38 +72,49 @@ plot_PCA <- function(rda_object, scaling = 1,
 
 
   # 3. ggplot ---------------------------------------------------------------
-  p <- ggplot() + geom_blank()
+  p <- ggplot() +
+    geom_blank()
 
   # species_arrow
   p <- p +
-    geom_segment(data = species,
-                 aes(x = PC1, y = PC2, xend = 0, yend = 0),
-                 size = 1,
-                 alpha = 0.6,
-                 arrow = arrow(ends = "first", angle = 20, length = unit(0.03, "npc")),
-                 color = "blue")
+    geom_segment(
+      data = species,
+      aes(x = PC1, y = PC2, xend = 0, yend = 0),
+      size = 1,
+      alpha = 0.6,
+      arrow = arrow(ends = "first", angle = 20, length = unit(0.03, "npc")),
+      color = "blue"
+    )
 
   # species_text
-  if (!is.null(species_addins)){
+  if (!is.null(species_addins)) {
     p <- p +
-      geom_label(data = species,
-                 aes_string(x = "PC1", y = "PC2", label = "variables", color = species_color))
-  } else{
+      geom_label(
+        data = species,
+        aes_string(x = "PC1", y = "PC2", label = "variables", color = species_color)
+      )
+  } else {
     p <- p +
-      geom_label(data = species,
-                 aes_string(x = "PC1", y = "PC2", label = "variables"),
-                 color = "black")
+      geom_label(
+        data = species,
+        aes_string(x = "PC1", y = "PC2", label = "variables"),
+        color = "black"
+      )
   }
 
   # sites_text
-  if (!is.null(sites_addins)){
+  if (!is.null(sites_addins)) {
     p <- p +
-      geom_label(data = sites,
-                 aes_string(x = "PC1", y = "PC2", label = sites_label, color = sites_color))
+      geom_label(
+        data = sites,
+        aes_string(x = "PC1", y = "PC2", label = sites_label, color = sites_color)
+      )
   } else {
     p <- p +
-      geom_label(data = sites,
-                 aes_string(x = "PC1", y = "PC2", label = rownames(sites_addins)))
+      geom_label(
+        data = sites,
+        aes_string(x = "PC1", y = "PC2", label = rownames(sites_addins))
+      )
   }
 
   # axis titles
@@ -114,5 +124,4 @@ plot_PCA <- function(rda_object, scaling = 1,
 
   # output
   p + coord_fixed()
-
 }

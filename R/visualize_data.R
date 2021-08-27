@@ -16,29 +16,29 @@
 #' visualize_data(iris_m)
 visualize_data <- function(long_data,
                            plot_type = c("boxplot", "density", "histogram"),
-                           facet = T){
+                           facet = T) {
   # 1. reading data
   p <- ggplot(long_data)
 
   # 2. plot type
-  if(missing(plot_type)){
+  if (missing(plot_type)) {
     plot_type <- "boxplot"
   }
 
-  if(plot_type == "boxplot"){
+  if (plot_type == "boxplot") {
     p <- p + geom_boxplot(aes(y = values))
   }
 
-  if(plot_type == "density"){
+  if (plot_type == "density") {
     p <- p + geom_density(aes(x = values))
   }
 
-  if(plot_type == "histogram"){
+  if (plot_type == "histogram") {
     p <- p + geom_histogram(aes(x = values))
   }
 
   # 3. Other features
-  if(isTRUE(facet)){
+  if (isTRUE(facet)) {
     p <- p + facet_wrap(~variables, scales = "free")
   }
   p

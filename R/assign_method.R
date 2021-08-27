@@ -10,26 +10,26 @@
 #' @examples
 #' a <- data.frame(Taxon = c("Polychaeta", "Oligochaeta", "Sipuncula", "Not in the column"))
 #' assign_method(a)
-assign_method <- function(data, method_file = NULL){
+assign_method <- function(data, method_file = NULL) {
 
   # initial if_else control flow --------------------------------------------
   if (is.character(data)) {
-    if (grepl(".xlsx", data)){ # measurement_file have ".xlsx"
+    if (grepl(".xlsx", data)) { # measurement_file have ".xlsx"
       data <- read_xlsx(data) %>% data.frame()
     }
-    if (grepl(".csv", data)){ # measurement_file have ".xlsx"
+    if (grepl(".csv", data)) { # measurement_file have ".xlsx"
       data <- read.csv(data) %>% data.frame()
     }
-  } else if (is.object(data)){ # measurement_file = object
+  } else if (is.object(data)) { # measurement_file = object
     data <- data.frame(data)
   } else {
     message("Neither measurement_file nor object")
     stop()
   }
 
-# assign method -----------------------------------------------------------
+  # assign method -----------------------------------------------------------
   if (is.null(method_file)) {
-   method_file <- biovolume_method
+    method_file <- biovolume_method
   } else if (is.object(method_file)) {
     method_file <- method_file
   } else {
@@ -38,8 +38,8 @@ assign_method <- function(data, method_file = NULL){
   }
 
   # separate simple cases and exceptional cases
-  simple <- method_file[is.na(method_file$Note),] %>% select(Taxon, Method, C)
-  exceptional <- method_file[!is.na(method_file$Note),] %>% select(Taxon, Note, Method, C)
+  simple <- method_file[is.na(method_file$Note), ] %>% select(Taxon, Method, C)
+  exceptional <- method_file[!is.na(method_file$Note), ] %>% select(Taxon, Note, Method, C)
 
   # merging data
   result_simple <-
@@ -55,5 +55,3 @@ assign_method <- function(data, method_file = NULL){
   # assign conversion factors for organisms that uses LWR
   full_join(result_simple, result_exceptional)
 }
-
-

@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' LWR(10,20,0.5)
-LWR <- function(Length, Width , Conversion_factor) {
+#' LWR(10, 20, 0.5)
+LWR <- function(Length, Width, Conversion_factor) {
   Length * Width * Width * Conversion_factor
 }

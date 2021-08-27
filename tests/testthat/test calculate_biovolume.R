@@ -10,10 +10,8 @@ test_that("Test the outcome of calculate_biovolume", {
   expect_equal(all(is.numeric(c$Size)), TRUE)
 
   # check cylinder
-  expect_equal(all(size_cyl$Size == Cylinder(size_cyl$L, size_cyl$W)       ), TRUE)
-  expect_equal(all(size_ell$Size == Ellipsoid(size_ell$L, size_ell$W)      ), TRUE)
-  expect_equal(all(size_con$Size == Cone(size_con$L, size_con$W)           ), TRUE)
+  expect_equal(all(size_cyl$Size == Cylinder(size_cyl$L, size_cyl$W)), TRUE)
+  expect_equal(all(size_ell$Size == Ellipsoid(size_ell$L, size_ell$W)), TRUE)
+  expect_equal(all(size_con$Size == Cone(size_con$L, size_con$W)), TRUE)
   expect_equal(all(size_LWR$Size == LWR(size_LWR$L, size_LWR$W, size_LWR$C)), TRUE)
 })
-
-
