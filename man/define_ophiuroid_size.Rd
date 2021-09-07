@@ -9,7 +9,7 @@ define_ophiuroid_size(data, protocol_ophiuroid, grouping_variables)
 \arguments{
 \item{data}{A long format data that had their biovolume stored in the column "Size".}
 
-\item{protocol_ophiuroid}{Currently have \code{"all_arms"} and \code{"longest_arms"} as the methods.
+\item{protocol_ophiuroid}{Currently have two options:.
 \itemize{
   \item \code{all_arms}: calculate the biovolume of one ophiuroid by simply add all the arms and
                   and their respective disc.
@@ -33,9 +33,11 @@ Note that this function only works under my measure
              example for more insight.
 }
 \examples{
-a <- data.frame(Taxon = rep("Ophiuroidea", 6),
-                Size = runif(6,min = 1, max = 5),
-                Note = c("Dics-1", rep("Arm-1", 4), "Arm"))
+a <- data.frame(
+  Taxon = rep("Ophiuroidea", 6),
+  Size = runif(6, min = 1, max = 5),
+  Note = c("Dics-1", rep("Arm-1", 4), "Arm")
+)
 define_ophiuroid_size(data = a, protocol = "all_arms")
 define_ophiuroid_size(data = a, protocol = "longest_arm")
 }

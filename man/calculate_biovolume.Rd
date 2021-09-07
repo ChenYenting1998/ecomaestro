@@ -16,9 +16,11 @@ The same data frame except that a new column called "Size" contains the volume d
 Calculates biovolume of the individuals with its assigned methods.
 }
 \examples{
-a <- data.frame(L = c(10,5,6,78,1,6),
-                W = c(0.1,3,4,1,2,3),
-                Method = c("LWR", "LWR", "Cylinder", "Cylinder", "Cone", "Elliposid"),
-                C = c(0.53,0.45,NA,NA,NA,NA))
+a <- data.frame(
+  L = c(10, 5, 6, 78, 1, 6),
+  W = c(0.1, 3, 4, 1, 2, 3),
+  Method = c("LWR", "LWR", "Cylinder", "Cylinder", "Cone", "Elliposid"),
+  C = c(0.53, 0.45, NA, NA, NA, NA)
+)
 calculate_biovolume(a)
 }

@@ -5,7 +5,7 @@
 #'              example for more insight.
 #'
 #' @param data A long format data that had their biovolume stored in the column "Size".
-#' @param protocol_ophiuroid Currently have \code{"all_arms"} and \code{"longest_arms"} as the methods.
+#' @param protocol_ophiuroid Currently have two options:.
 #' \itemize{
 #'   \item \code{all_arms}: calculate the biovolume of one ophiuroid by simply add all the arms and
 #'                   and their respective disc.
@@ -47,13 +47,13 @@ define_ophiuroid_size <- function(data,
   if (protocol_ophiuroid == "all_arms") {
 
     # summation
-    oph_sum_group <- c(grouping_variables, "Taxon", "ind") %>% lapply(as.symbol)
+    oph_sum_group <- c(grouping_variables, "Taxon", "ind")
     oph_sum <-
       oph_split %>%
       mutate(Type = NA, L = NA, W = NA) %>%
-      group_by(.dots = oph_sum_group) %>%
+      group_by(across(all_of(oph_sum_group))) %>%
       # think about this part
-      summarize(Size = sum(Size)) %>%
+      summarise(Size = sum(Size)) %>%
       ungroup()
 
     # remove redundant observations
@@ -75,7 +75,7 @@ define_ophiuroid_size <- function(data,
       mutate(Type = NA, L = NA, W = NA) %>%
       # removing redundant information
       filter(!ind %in% c("Arm", "Disc")) %>%
-      group_by(.dots = oph_max_size_group) %>%
+      group_by(across(all_of(oph_max_size_group))) %>%
       # group
       filter(Size == max(Size)) %>%
       # find largest sizes with respect to the arms and discs
@@ -88,7 +88,7 @@ define_ophiuroid_size <- function(data,
     oph_max_size_sum_group <- c(grouping_variables, "Taxon", "ind")
     oph_max_size_sum <-
       oph_max_size %>%
-      group_by(.dots = oph_max_size_sum_group) %>%
+      group_by(across(all_of(oph_max_size_sum_group))) %>%
       # group
       summarise(Size = sum(Size)) %>%
       mutate(Method = "Compound", Condition = "C")

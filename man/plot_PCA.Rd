@@ -40,6 +40,6 @@ Plots the PCA result from a `rda` object in package `vegan` with `ggplot2`. Note
 data(iris)
 values <- iris[-5] # extract numerical values from `iris`
 normalized <- scale(values) # normalize the values
-pca_iris <- rda(normalized)  # returns a "rda" object
+pca_iris <- rda(normalized) # returns a "rda" object
 plot_PCA(pca_iris, sites_addins = iris[5], sites_label = "Species", sites_color = "Species")
 }

@@ -53,5 +53,5 @@ assign_method <- function(data, method_file = NULL) {
     left_join(exceptional)
 
   # assign conversion factors for organisms that uses LWR
-  full_join(result_simple, result_exceptional)
+  full_join(result_exceptional, result_simple)
 }
