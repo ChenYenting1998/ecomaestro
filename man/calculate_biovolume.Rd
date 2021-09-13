@@ -15,6 +15,9 @@ The same data frame except that a new column called "Size" contains the volume d
 \description{
 Calculates biovolume of the individuals with its assigned methods.
 }
+\details{
+Note that this function will first remove all the entris in the `Size` column.
+}
 \examples{
 a <- data.frame(
   L = c(10, 5, 6, 78, 1, 6),

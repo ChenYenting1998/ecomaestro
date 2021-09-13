@@ -4,7 +4,7 @@
 #'
 #' @return The same data frame except that a new column called "Size" contains the volume data.
 #' @export
-#'
+#' @details Note that this function will first remove all the entris in the `Size` column.
 #' @examples
 #' a <- data.frame(
 #'   L = c(10, 5, 6, 78, 1, 6),
@@ -44,7 +44,7 @@ calculate_biovolume <- function(data) {
   # calculate biovolume -----------------------------------------------------
   data <-
     data %>%
-    mutate(Size = NA)
+    mutate(Size = NA) # remove previous calculations
 
   # LWR
   data[data$Method == "LWR", ] <-
