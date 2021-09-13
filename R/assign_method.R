@@ -1,13 +1,25 @@
-#' Assign volume esitmation method in to each individuals
+#' @title  Assign volume estimation method in to each individuals
+#'
+#' @description This function adds the following two columns to your original data frame:
+#'      \itemize{
+#'      \item \code{Method} : This column stores the method for biomass calculation.
+#'      \item \code{C} : This column stores the conversion factors for individuals that uses
+#'                       length-weight relationships for biomass calculation.
+#'      }
 #'
 #' @param data The data that records observations of each individuals size measurements
 #'             with at least the following columns: "Taxon"
-#' @param method_file The file that contains the pairwise. If NULL, the method file will use the default
-#'                    "biovolume_method" data.
+#' @param method_file The file that contains the pairwise biovolume estimation method.
+#'                    Note that the method file has a specific format to follow. See
+#'                    \code{biovolume method} for more information.
+#'                    If NULL, the method file will use the default "biovolume_method"
+#'                    data.
 #' @return
 #' @export
 #'
 #' @examples
+#' # the default estimation method for each available taxon.
+#' biovolume_method
 #' a <- data.frame(Taxon = c("Polychaeta", "Oligochaeta", "Sipuncula", "Not in the column"))
 #' assign_method(a)
 assign_method <- function(data, method_file = NULL) {
@@ -33,8 +45,7 @@ assign_method <- function(data, method_file = NULL) {
   } else if (is.object(method_file)) {
     method_file <- method_file
   } else {
-    message("method file is neither NULL or an object")
-    stop()
+    stop("method file is neither NULL or an object")
   }
 
   # separate simple cases and exceptional cases
@@ -53,5 +64,13 @@ assign_method <- function(data, method_file = NULL) {
     left_join(exceptional)
 
   # assign conversion factors for organisms that uses LWR
-  full_join(result_exceptional, result_simple)
+  output <- full_join(result_exceptional, result_simple)
+
+  if (any(is.na(output$Method))) {
+    cat("The following observations do not have methods", "\n",
+        output[is.na(output$Method),])
+    return(output)
+  } else {
+    output
+  }
 }

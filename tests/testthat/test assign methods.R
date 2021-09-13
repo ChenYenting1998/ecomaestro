@@ -2,7 +2,13 @@ test_that("Test the outcome of assign_method", {
   a <- readxl::read_xlsx("testdata.xlsx")
   result <- assign_method(a, method_file = NULL)
 
+  # check output columns
+  expect_equal("Method" %in% colnames(result), T)
+  expect_equal("C" %in% colnames(result), T)
+
   # simple
+  # This test is dumb
+  # need a new one
   expect_equal(unique(result$Method[result$Taxon == "Polychaeta"]), "LWR")
   expect_equal(unique(result$Method[result$Taxon == "Oligochaeta"]), "LWR")
   expect_equal(unique(result$Method[result$Taxon == "Isopoda"]), "LWR")
