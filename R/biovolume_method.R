@@ -9,4 +9,4 @@
 #'     \item \code{C_origin} The origin of conversion factors for taxa
 #'                           without published factors.
 #'     \item \code{Comment} Comment about the whole row.
-#'
+"biovolume_method"
