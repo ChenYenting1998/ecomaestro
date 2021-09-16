@@ -35,8 +35,7 @@ assign_method <- function(data, method_file = NULL) {
   } else if (is.object(data)) { # measurement_file = object
     data <- data.frame(data)
   } else {
-    message("Neither measurement_file nor object")
-    stop()
+    stop("Neither measurement_file nor object")
   }
 
   # assign method -----------------------------------------------------------

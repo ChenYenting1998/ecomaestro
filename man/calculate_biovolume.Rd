@@ -17,6 +17,7 @@ Calculates biovolume of the individuals with its assigned methods.
 }
 \details{
 Note that this function will first remove all the entris in the `Size` column.
+         Another thing is that this function is not flexible enough. Further revision is needed.
 }
 \examples{
 a <- data.frame(

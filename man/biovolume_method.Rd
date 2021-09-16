@@ -5,7 +5,7 @@
 \alias{biovolume_method}
 \title{Biovolume method}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 46 rows and 6 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 6 columns.
 }
 \usage{
 biovolume_method
