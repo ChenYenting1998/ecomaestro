@@ -5,7 +5,7 @@
 \alias{biovolume_method}
 \title{Biovolume method}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 48 rows and 6 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 43 rows and 6 columns.
 }
 \usage{
 biovolume_method
@@ -13,6 +13,7 @@ biovolume_method
 \description{
 This data documents the biovolume estimation methods
              respective to each taxon.
+ \itemize{
     \item \code{Taxon} Taxa in the recorded form.
     \item \code{Note} Parsing the taxa into different estimation methods.
     \item \code{Method} The methods for biovolume methods. Currently
@@ -21,5 +22,6 @@ This data documents the biovolume estimation methods
     \item \code{C_origin} The origin of conversion factors for taxa
                           without published factors.
     \item \code{Comment} Comment about the whole row.
+    }
 }
 \keyword{datasets}
